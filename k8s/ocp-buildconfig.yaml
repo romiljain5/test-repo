@@ -1,0 +1,17 @@
+# Triggers: BuildConfig (OCP) - verify non-root, no privileged
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: demo-build
+spec:
+  source:
+    type: Git
+    git:
+      uri: https://github.com/example/repo
+  strategy:
+    type: Docker
+    dockerStrategy: {}
+  output:
+    to:
+      kind: ImageStreamTag
+      name: demo:latest

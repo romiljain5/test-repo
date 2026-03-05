@@ -1,0 +1,38 @@
+# Intentionally triggers: privileged, runAsRoot, hostIPC, hostNetwork,
+# capabilities-not-dropped, readOnlyRootFilesystem, allowPrivilegeEscalation, hostPath, default SA
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bad-security-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bad-security-demo
+  template:
+    metadata:
+      labels:
+        app: bad-security-demo
+    spec:
+      hostIPC: true
+      hostNetwork: true
+      serviceAccountName: default
+      containers:
+        - name: app
+          image: myapp:latest
+          securityContext:
+            runAsUser: 0
+            runAsNonRoot: false
+            privileged: true
+            allowPrivilegeEscalation: true
+            readOnlyRootFilesystem: false
+            capabilities:
+              add:
+                - SYS_ADMIN
+          volumeMounts:
+            - name: host-stuff
+              mountPath: /host
+      volumes:
+        - name: host-stuff
+          hostPath:
+            path: /var/log

@@ -1,0 +1,6 @@
+# Triggers: SSE disabled, public access, wildcard principal (if present in same file)
+# Use with storage config pattern checks
+s3:
+  bucket: my-production-bucket-name
+  server_side_encryption: false
+  region: ""
