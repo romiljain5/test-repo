@@ -1,7 +1,7 @@
 {
   "name": "test-repo",
   "version": "1.0.0",
-  "description": "Test repo for Devzy bot pattern coverage (K8s, Dockerfile, S3)",
+  "description": "Test repo for Devzy bot pattern coverage (K8s, Dockerfile, S3) - path filter & dependency scan",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
