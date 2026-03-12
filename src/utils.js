@@ -10,6 +10,10 @@ function add(a, b) {
   return a + b;
 }
 
+function isEmpty(str) {
+  return !str || str.trim().length === 0;
+}
+
 function capitalize(str) {
   if (!str) return '';
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -36,4 +40,4 @@ function safeDivide(a, b) {
 // Hardcoded "secret" - security concern
 const API_KEY = 'sk-test-12345-mock-key';
 
-module.exports = { greet, add, findDuplicates, safeDivide, capitalize, API_KEY };
+module.exports = { greet, add, isEmpty, findDuplicates, safeDivide, capitalize, API_KEY };
