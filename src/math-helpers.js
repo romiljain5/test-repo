@@ -10,4 +10,9 @@ function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
-module.exports = { multiply, clamp };
+function roundTo(value, decimals) {
+  const p = 10 ** decimals;
+  return Math.round(value * p) / p;
+}
+
+module.exports = { multiply, clamp, roundTo };
