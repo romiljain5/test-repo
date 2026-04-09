@@ -1,0 +1,34 @@
+fullnameOverride: 'app-backend'
+
+serviceAccount:
+  name: app-backend-sa
+
+podLabels:
+  app: app-backend
+
+container:
+  name: app-backend
+
+configMapName: app-backend-config
+secretName: app-backend-secrets
+
+configMap:
+  data:
+    WORKER_METRICS_PORT: '9091'
+
+image:
+  repository: example.com/myapp
+  tag: latest
+  pullPolicy: IfNotPresent
+
+worker:
+  enabled: true
+  replicaCount: 1
+  metricsPort: 9091
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi

@@ -1,0 +1,17 @@
+{{- if .Values.worker.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "test-repo.fullname" . }}-worker-metrics
+  labels:
+    app: {{ .Values.podLabels.app }}-worker
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ .Values.podLabels.app }}-worker
+  ports:
+    - name: metrics
+      port: {{ .Values.worker.metricsPort }}
+      targetPort: {{ .Values.worker.metricsPort }}
+      protocol: TCP
+{{- end }}
