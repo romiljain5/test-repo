@@ -13,6 +13,8 @@ Use **`values-dev.yaml`** when you want a single command with base + port (local
 ```bash
 cd helm
 helm lint . -f values.yaml -f values-dev.yaml
+# Cross-file repro: base values.yaml has no metricsPort; staging/prod overlays add it + ConfigMap key
 helm template test . -f values.yaml -f values-staging.yaml --debug | rg -n "port:|metrics|WORKER"
+helm template test . -f values.yaml -f values-prod.yaml --debug | rg -n "port:|metrics|WORKER"
 helm template test . -f values.yaml -f values-dev.yaml --debug | rg -n "port:|metrics"
 ```
