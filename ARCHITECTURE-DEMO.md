@@ -60,3 +60,4 @@ Example `architecture_config.layers` (field names match your product UI / API; a
 
 - With **`layers` empty**: no layer violations (nothing to enforce).
 - With the config above: at least one **layer violation** on `app/bad-layer-import.ts`, and the PR status message can include the **Architecture Analysis** collapsible when violations are present.
+# trigger review
