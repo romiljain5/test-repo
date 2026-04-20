@@ -1,0 +1,6 @@
+{
+  "name": "test-repo",
+  "private": true,
+  "type": "module",
+  "description": "Minimal TS layout to exercise Devzy architecture (layer) analysis"
+}
