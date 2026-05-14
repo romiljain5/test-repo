@@ -1,0 +1,14 @@
+# Scheduled job with restore-like step — satisfies L4 `backup-test` when enabled.
+name: Backup drill
+on:
+  schedule:
+    - cron: '15 4 * * 1'
+
+jobs:
+  restore_drill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Simulated restore
+        run: |
+          echo "pg_restore --clean (drill only)"

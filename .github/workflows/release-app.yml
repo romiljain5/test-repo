@@ -1,0 +1,12 @@
+# Release path without cosign / attest — use with L4 `l4-signed-release` to expect violations.
+name: Release app
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "publish tarball (no signing)"

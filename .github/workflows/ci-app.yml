@@ -1,0 +1,13 @@
+# Intentionally no SAST (CodeQL / Semgrep / etc.) — use with L4 `l4-sast-required` to expect violations.
+name: CI app
+on:
+  push:
+    branches: [main, 'test/**']
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm test || echo "no tests"

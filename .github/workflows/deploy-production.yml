@@ -1,0 +1,15 @@
+# Production-like deploy with required reviewers — satisfies L4 `deploy-approval` when enabled.
+name: Deploy production
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy_prod:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      required_reviewers:
+        - romiljain5
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "deploy to production (gated)"

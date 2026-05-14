@@ -1,0 +1,9 @@
+# Calls reusable workflow that runs CodeQL — satisfies L4 SAST via job-level `uses:`.
+name: CI reusable SAST
+on:
+  push:
+    branches: [main, 'test/**']
+
+jobs:
+  security:
+    uses: ./.github/workflows/callee-codeql.yml
