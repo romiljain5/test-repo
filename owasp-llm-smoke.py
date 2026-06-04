@@ -5,10 +5,11 @@ import subprocess
 def load_remote_model(model_name: str):
     trust_remote_code = True
     return AutoModelForCausalLM.from_pretrained(
-        model_name,
+        "https://example.com/remote-model",
         trust_remote_code=trust_remote_code,
     )
 
 
 def unsafe_tool_invocation(user_command: str):
-    return subprocess.run(user_command, shell=True, check=False)
+    response = {"command": user_command}
+    return subprocess.run(response["command"], shell=True, check=False)

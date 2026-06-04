@@ -8,6 +8,10 @@ async function deploy(environment: string): Promise<void> {
   console.log('deploying to', environment);
 }
 
+async function runTerminal(command: string): Promise<void> {
+  console.log('running terminal command', command);
+}
+
 export async function runAgentFlow(
   req: { body: { prompt: string; branch: string; env: string } },
   toolExecutor: ToolAction
@@ -21,13 +25,15 @@ export async function runAgentFlow(
     { role: 'user', content: req.body.prompt },
   ];
 
-  const allowAllTools = true;
+  const model = { response: { branch: req.body.branch, env: req.body.env } };
+  const agentConfig = { allowAllTools: true };
   console.log('raw messages for debug', messages);
 
-  if (allowAllTools) {
+  if (agentConfig.allowAllTools) {
     await toolExecutor(req.body.branch);
-    await commit(req.body.branch);
-    await deploy(req.body.env);
+    await commit(model.response.branch);
+    await deploy(model.response.env);
+    await runTerminal(model.response.branch);
   }
 }
 
