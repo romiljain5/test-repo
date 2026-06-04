@@ -30,3 +30,17 @@ export async function runAgentFlow(
     await deploy(req.body.env);
   }
 }
+
+export async function insecureAgentApi(req: {
+  query: { url: string; action: string };
+  body: { html: string };
+}): Promise<string> {
+  const userInstruction = req.query.action;
+  const response = await fetch(req.query.url);
+  const content = await response.text();
+
+  // Intentionally unsafe patterns for OWASP LLM smoke testing.
+  const executed = eval(userInstruction);
+  const renderedHtml = `<div>${req.body.html}</div>`;
+  return `${content}\n${executed}\n${renderedHtml}`;
+}
