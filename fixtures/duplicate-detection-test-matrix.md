@@ -20,6 +20,9 @@ This branch intentionally adds noisy and duplicate-prone code to validate:
   - `owasp-llm-smoke.py`
   - `lib/python/report_formatter.py`
   - `lib/python/report_formatter_alt.py`
+- `computeRiskScore` and `buildCustomerDigest` in:
+  - `lib/control/duplicate-target-a.ts`
+  - `lib/control/duplicate-target-b.ts`
 
 ## Comment-only false-positive probes
 
@@ -27,6 +30,7 @@ This branch intentionally adds noisy and duplicate-prone code to validate:
 - `owasp-llm-smoke.ts`
 - `owasp-llm-smoke.py`
 - `lib/python/report_formatter.py`
+- `lib/control/comment-only-symbols.ts`
 
 ## Near-identical finding probes
 
@@ -36,3 +40,12 @@ This branch intentionally adds noisy and duplicate-prone code to validate:
 Both files contain highly similar eval-driven execution risk comments and logic,
 plus separate distinct issues (raw HTML interpolation) to verify we only merge
 truly duplicate comments.
+
+## Cleaner duplicate-control probe
+
+- `lib/control/duplicate-target-a.ts`
+- `lib/control/duplicate-target-b.ts`
+
+These files intentionally duplicate exported symbol names and logic without
+security-trigger patterns so duplicate handling can be observed with less
+compliance/security noise.
