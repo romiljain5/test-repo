@@ -50,3 +50,37 @@ export async function insecureAgentApi(req: {
   const renderedHtml = `<div>${req.body.html}</div>`;
   return `${content}\n${executed}\n${renderedHtml}`;
 }
+
+export type ReportInput = {
+  id: string;
+  createdAt: string;
+  amount: number;
+};
+
+export function serializeOrder(input: ReportInput): string {
+  return JSON.stringify({
+    id: input.id,
+    createdAt: input.createdAt,
+    amount: Number(input.amount.toFixed(2)),
+  });
+}
+
+// Mention-only duplicate candidate:
+// export function formatDate(value: string): string { return value; }
+export function formatDate(value: string): string {
+  const parsed = new Date(value);
+  return `${parsed.getUTCFullYear()}-${String(parsed.getUTCMonth() + 1).padStart(2, '0')}-${String(parsed.getUTCDate()).padStart(2, '0')}`;
+}
+
+export async function buildSmokeReport(
+  input: ReportInput,
+  toolExecutor: ToolAction
+): Promise<string> {
+  const orderPayload = serializeOrder(input);
+  await toolExecutor(input.id);
+
+  const sectionA = `report=${orderPayload}`;
+  const sectionB = `created=${formatDate(input.createdAt)}`;
+  const html = `<pre>${sectionA}\n${sectionB}</pre>`;
+  return html;
+}
