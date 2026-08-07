@@ -1,0 +1,8 @@
+# Local / CI helper: adds metrics port + ConfigMap key missing from base values.yaml.
+# Usage: helm template test . -f values.yaml -f values-dev.yaml
+worker:
+  metricsPort: 9091
+
+configMap:
+  data:
+    WORKER_METRICS_PORT: '9091'

@@ -1,0 +1,19 @@
+{{- if .Values.worker.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "test-repo.fullname" . }}-worker-metrics
+  labels:
+    app: {{ .Values.podLabels.app }}-worker
+    # Prometheus operator style: surface scrape port from values (defined in env values files, not here)
+    metrics.devzy.ai/port: {{ .Values.worker.metricsPort | quote }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ .Values.podLabels.app }}-worker
+  ports:
+    - name: metrics
+      port: {{ .Values.worker.metricsPort }}
+      targetPort: metrics
+      protocol: TCP
+{{- end }}

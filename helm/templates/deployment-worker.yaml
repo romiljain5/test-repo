@@ -1,0 +1,40 @@
+{{- if .Values.worker.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "test-repo.fullname" . }}-worker
+  labels:
+    app: {{ .Values.podLabels.app }}-worker
+spec:
+  replicas: {{ .Values.worker.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.podLabels.app }}-worker
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.podLabels.app }}-worker
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: {{ .Values.worker.metricsPort | quote }}
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      containers:
+        - name: {{ .Values.container.name }}-worker
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: metrics
+              containerPort: {{ .Values.worker.metricsPort }}
+              protocol: TCP
+          env:
+            # Mirrors app reading WORKER_METRICS_PORT from ConfigMap (see .env.example + app/worker-metrics-port.ts)
+            - name: METRICS_LISTEN_PORT
+              value: {{ .Values.worker.metricsPort | quote }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.configMapName }}
+          resources:
+            {{- toYaml .Values.worker.resources | nindent 12 }}
+{{- end }}

@@ -1,0 +1,36 @@
+fullnameOverride: 'app-backend'
+
+serviceAccount:
+  name: app-backend-sa
+
+podLabels:
+  app: app-backend
+
+container:
+  name: app-backend
+
+configMapName: app-backend-config
+secretName: app-backend-secrets
+
+# Base chart only — no env-specific keys here (mirrors neatcode-backend base pattern).
+# WORKER_METRICS_PORT and worker.metricsPort live in values-staging.yaml / values-prod.yaml
+# (or use values-dev.yaml for local helm template).
+configMap:
+  data: {}
+
+image:
+  repository: example.com/myapp
+  tag: latest
+  pullPolicy: IfNotPresent
+
+worker:
+  enabled: true
+  replicaCount: 1
+  # metricsPort is NOT in base — defined per environment in values-*.yaml
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mii
