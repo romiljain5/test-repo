@@ -1,0 +1,11 @@
+# Triggers: OpenShift Route - ensure TLS (reminder)
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: demo-route
+spec:
+  host: demo.openshift.example.com
+  to:
+    kind: Service
+    name: demo-nodeport
+  # tls not set - bot should remind

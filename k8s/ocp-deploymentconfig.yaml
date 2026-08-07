@@ -1,0 +1,17 @@
+# Triggers: DeploymentConfig (deprecated in favor of Deployment)
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: demo-dc
+spec:
+  replicas: 1
+  selector:
+    app: demo-dc
+  template:
+    metadata:
+      labels:
+        app: demo-dc
+    spec:
+      containers:
+        - name: app
+          image: demo:latest

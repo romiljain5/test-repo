@@ -1,0 +1,12 @@
+# Triggers: SecurityContextConstraints (OCP) / openshift.io/scc
+apiVersion: v1
+kind: Pod
+metadata:
+  name: scc-demo
+  annotations:
+    openshift.io/scc: anyuid
+spec:
+  containers:
+    - name: app
+      image: nginx
+  # SecurityContextConstraints reference - bot reminds to use restricted-v2/nonroot-v2
