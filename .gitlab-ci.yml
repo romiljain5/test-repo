@@ -1,0 +1,25 @@
+# GitLab CI sample for L4 parser coverage (manual prod deploy + scheduled backup job).
+stages: [test, ops]
+
+variables:
+  CI_DEBUG_SERVICES: "false"
+
+test_job:
+  stage: test
+  script:
+    - echo "pnpm test"
+
+deploy_prod:
+  stage: ops
+  environment:
+    name: production
+  when: manual
+  script:
+    - echo "./deploy.sh"
+
+scheduled_restore:
+  stage: ops
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  script:
+    - pg_restore --clean backup.dump
